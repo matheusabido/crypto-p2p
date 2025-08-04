@@ -1,5 +1,6 @@
 use crate::ui::manager::{CryptoChat, Page};
 
+mod net;
 mod ui;
 
 fn main() -> iced::Result {

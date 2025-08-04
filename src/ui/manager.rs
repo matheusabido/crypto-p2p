@@ -40,14 +40,14 @@ impl Page for CryptoChat {
     }
 }
 
-#[derive(Debug, Clone, Copy)]
+#[derive(Debug, Clone)]
 pub enum Message {
     HomePage(HomeMessage),
     ChatPage(ChatMessage),
     Move(Pages),
 }
 
-#[derive(Debug, Clone, Copy)]
+#[derive(Debug, Clone)]
 pub enum Pages {
     HomePage,
     ChatPage,
