@@ -28,17 +28,9 @@ impl Page for HomePage {
 
         let profile_buttons = self.create_profile_buttons();
         let connection_input = self.create_connection_input();
+        let connection_buttons = self.create_connection_buttons();
 
-        let start_button = button("Start")
-            .style(|theme, status| button_primary_style(theme, status))
-            .padding(Padding {
-                top: 8.0,
-                right: 32.0,
-                bottom: 8.0,
-                left: 32.0,
-            });
-
-        let connection_menu = column![profile_buttons, connection_input, start_button]
+        let connection_menu = column![profile_buttons, connection_input, connection_buttons]
             .spacing(8)
             .align_x(Alignment::Center);
 
@@ -111,6 +103,33 @@ impl HomePage {
             .line_height(text::LineHeight::Relative(1.5));
 
         connection_input
+    }
+
+    fn create_connection_buttons(&self) -> Column<Message> {
+        let start_button = button(text("Start").align_x(Alignment::Center).width(Length::Fill))
+            .style(button_primary_style)
+            .width(Length::Fill);
+
+        let cancel_button = button(
+            text("Cancel")
+                .align_x(Alignment::Center)
+                .width(Length::Fill),
+        )
+        .style(button_outline_style)
+        .width(Length::Fill);
+
+        let col = column![start_button, cancel_button]
+            .align_x(Alignment::Center)
+            .padding(Padding {
+                top: 8.0,
+                right: 32.0,
+                bottom: 8.0,
+                left: 32.0,
+            })
+            .spacing(8)
+            .width(200);
+
+        col
     }
 }
 

@@ -70,11 +70,7 @@ pub fn button_primary_style(_theme: &Theme, status: button::Status) -> button::S
                 width: 0.0,
                 radius: Radius::new(5),
             },
-            shadow: Shadow {
-                offset: iced::Vector::new(0.0, 1.0),
-                blur_radius: 2.0,
-                color: Color::from_rgba(0.0, 0.0, 0.0, 0.25),
-            },
+            shadow: Shadow::default(),
         },
         button::Status::Pressed => button::Style {
             background: Some(Background::Color(pressed_color)),
