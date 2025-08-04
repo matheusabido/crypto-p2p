@@ -1,4 +1,4 @@
-pub mod chat_page;
-pub mod home_page;
+pub mod page;
 pub mod manager;
 pub mod style;
+pub mod utils;

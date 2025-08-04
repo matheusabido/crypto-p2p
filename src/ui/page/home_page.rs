@@ -55,6 +55,9 @@ impl Page for HomePage {
                     Behavior::Connect => self.connection_addr = val,
                     Behavior::Listen => self.listen_port = val,
                 },
+                HomeMessage::StartClicked => {
+                    println!("Start!!!");
+                }
             },
             _ => {}
         }
@@ -106,9 +109,18 @@ impl HomePage {
     }
 
     fn create_connection_buttons(&self) -> Column<Message> {
-        let start_button = button(text("Start").align_x(Alignment::Center).width(Length::Fill))
+        let input_has_content = match self.behavior {
+            Behavior::Connect => !self.connection_addr.is_empty(),
+            Behavior::Listen => !self.listen_port.is_empty(),
+        };
+
+        let mut start_button = button(text("Start").align_x(Alignment::Center).width(Length::Fill))
             .style(button_primary_style)
             .width(Length::Fill);
+
+        if input_has_content {
+            start_button = start_button.on_press(HomeMessage::StartClicked.into());
+        }
 
         let cancel_button = button(
             text("Cancel")
@@ -138,6 +150,7 @@ pub enum HomeMessage {
     SelectListen,
     SelectConnect,
     InputChanged(String),
+    StartClicked,
 }
 
 impl Into<Message> for HomeMessage {

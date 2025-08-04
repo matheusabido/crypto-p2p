@@ -4,5 +4,5 @@ mod net;
 mod ui;
 
 fn main() -> iced::Result {
-    iced::run("Test App", CryptoChat::update, CryptoChat::view)
+    iced::application("Test App", CryptoChat::update, CryptoChat::view).theme(CryptoChat::theme).run()
 }

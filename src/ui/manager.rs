@@ -1,9 +1,6 @@
-use iced::Element;
+use iced::{Element, Theme};
 
-use crate::ui::{
-    chat_page::{ChatMessage, ChatPage},
-    home_page::{HomeMessage, HomePage},
-};
+use crate::ui::page::{chat_page::{ChatMessage, ChatPage}, home_page::{HomeMessage, HomePage}};
 
 pub trait Page {
     fn view(&self) -> Element<Message>;
@@ -37,6 +34,12 @@ impl Page for CryptoChat {
             }
             _ => self.page.update(message),
         }
+    }
+}
+
+impl CryptoChat {
+    pub fn theme(&self) -> Theme {
+        Theme::Dark
     }
 }
 
