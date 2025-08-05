@@ -1,4 +1,4 @@
-#[derive(Default)]
+#[derive(Default, Debug, Clone)]
 pub enum Behavior {
     #[default]
     Listen,

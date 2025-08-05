@@ -1,5 +1,5 @@
 use iced::{
-    Alignment, Font, Length, Padding,
+    Alignment, Element, Font, Length, Padding,
     font::Weight,
     widget::{Column, TextInput, button, column, row, text, text_input},
 };
@@ -7,7 +7,7 @@ use iced::{
 use crate::{
     net::common::Behavior,
     ui::{
-        manager::{Message, Page},
+        manager::{Message, Page, Pages},
         style::{button_outline_style, button_primary_style},
     },
 };
@@ -55,9 +55,6 @@ impl Page for HomePage {
                     Behavior::Connect => self.connection_addr = val,
                     Behavior::Listen => self.listen_port = val,
                 },
-                HomeMessage::StartClicked => {
-                    println!("Start!!!");
-                }
             },
             _ => {}
         }
@@ -108,7 +105,7 @@ impl HomePage {
         connection_input
     }
 
-    fn create_connection_buttons(&self) -> Column<Message> {
+    fn create_connection_buttons(&self) -> Element<Message> {
         let input_has_content = match self.behavior {
             Behavior::Connect => !self.connection_addr.is_empty(),
             Behavior::Listen => !self.listen_port.is_empty(),
@@ -116,32 +113,20 @@ impl HomePage {
 
         let mut start_button = button(text("Start").align_x(Alignment::Center).width(Length::Fill))
             .style(button_primary_style)
-            .width(Length::Fill);
-
-        if input_has_content {
-            start_button = start_button.on_press(HomeMessage::StartClicked.into());
-        }
-
-        let cancel_button = button(
-            text("Cancel")
-                .align_x(Alignment::Center)
-                .width(Length::Fill),
-        )
-        .style(button_outline_style)
-        .width(Length::Fill);
-
-        let col = column![start_button, cancel_button]
-            .align_x(Alignment::Center)
             .padding(Padding {
                 top: 8.0,
                 right: 32.0,
                 bottom: 8.0,
                 left: 32.0,
             })
-            .spacing(8)
             .width(200);
 
-        col
+        if input_has_content {
+            start_button =
+                start_button.on_press(Message::Move(Pages::WaitingPage(self.behavior.to_owned())));
+        }
+
+        start_button.into()
     }
 }
 
@@ -150,7 +135,6 @@ pub enum HomeMessage {
     SelectListen,
     SelectConnect,
     InputChanged(String),
-    StartClicked,
 }
 
 impl Into<Message> for HomeMessage {

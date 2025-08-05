@@ -1,6 +1,13 @@
 use iced::{Element, Theme};
 
-use crate::ui::page::{chat_page::{ChatMessage, ChatPage}, home_page::{HomeMessage, HomePage}};
+use crate::{
+    net::common::Behavior,
+    ui::page::{
+        chat_page::{ChatMessage, ChatPage},
+        home_page::{HomeMessage, HomePage},
+        waiting_page::WaitingPage,
+    },
+};
 
 pub trait Page {
     fn view(&self) -> Element<Message>;
@@ -30,6 +37,9 @@ impl Page for CryptoChat {
                 match page {
                     Pages::ChatPage => self.page = Box::new(ChatPage::default()),
                     Pages::HomePage => self.page = Box::new(HomePage::default()),
+                    Pages::WaitingPage(behavior) => {
+                        self.page = Box::new(WaitingPage::new(behavior))
+                    }
                 };
             }
             _ => self.page.update(message),
@@ -54,4 +64,5 @@ pub enum Message {
 pub enum Pages {
     HomePage,
     ChatPage,
+    WaitingPage(Behavior),
 }

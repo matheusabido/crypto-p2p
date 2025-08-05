@@ -1,4 +1,4 @@
-use iced::{border::Radius, widget::button, Background, Color, Shadow, Theme};
+use iced::{Background, Color, Shadow, Theme, border::Radius, widget::button};
 
 use crate::ui::utils::{darken, lighten};
 
